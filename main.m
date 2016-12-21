@@ -1,7 +1,7 @@
 N = 10;
 constraints.rho0 = 1/2;
 constraints.tau0 = 1/8;
-[g, c] = initialize(N, constraints, true);
+[g, c] = initialize(N, constraints, false);
 
 % fix c, optimize g
 fun = @(x)entropy(x, c, N);
@@ -23,6 +23,7 @@ beq = zeros((N-1)*N/2, 1);
 lb = zeros(size(g));
 ub = ones(size(g));
 
+options = optimoptions('fmincon','Display', 'iter', 'MaxFunctionEvaluation', 1e10)
 nonlcon = @(x)nonlinear_constraints(x, c, N, constraints);
-g_opt = fmincon(fun, g, [], [], Aeq, beq, lb, ub, nonlcon);
+g_opt = fmincon(fun, g, [], [], Aeq, beq, lb, ub, nonlcon, options);
 g_opt
