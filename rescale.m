@@ -34,5 +34,5 @@ for i = 1:N
 end
 syms a b;
 [alpha, beta] = vpasolve([A1*a + A2*b == rho0; B1*a^3+B2*a^2*b+B3*a*b^2+B4*b^3 == tau0;], [a, b]);
-g = alpha(1) * g + beta(1);
+g = double(alpha(1) * g + beta(1));
 end
