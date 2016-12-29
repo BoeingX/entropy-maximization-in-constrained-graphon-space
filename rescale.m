@@ -34,5 +34,31 @@ for i = 1:N
 end
 syms a b;
 [alpha, beta] = vpasolve([A1*a + A2*b == rho0; B1*a^3+B2*a^2*b+B3*a*b^2+B4*b^3 == tau0;], [a, b]);
-g = double(alpha(1) * g + beta(1));
+if isreal(alpha(1))
+    alpha_ = alpha(1);
+    beta_ = beta(1);
+    g = double(alpha_ * g + beta_);
+    if sum(g>1) == 0 && sum(g<0) == 0 
+        return
+    end
+end
+if isreal(alpha(2))
+    alpha_ = alpha(2);
+    beta_ = beta(2);
+    g = double(alpha_ * g + beta_);
+    if sum(g>1) == 0 && sum(g<0) == 0 
+        return
+    end
+end
+if isreal(alpha(3))
+    alpha_ = alpha(3);
+    beta_ = beta(3);
+    g = double(alpha_ * g + beta_);
+    if sum(g>1) == 0 && sum(g<0) == 0 
+        return
+    end
+end
+alpha_ = NaN;
+beta_ = NaN;
+g = double(alpha_ * g + beta_);
 end

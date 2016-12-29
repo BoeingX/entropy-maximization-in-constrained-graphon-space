@@ -1,6 +1,6 @@
-N = 10;
-constraints.rho0 = 1/2;
-constraints.tau0 = 1/8;
+N = 2;
+constraints.rho0 = 1/4;
+constraints.tau0 = 0;
 [g, c] = initialize(N, constraints, false);
 f_opts = [Inf];
 tol = 1e-6;
