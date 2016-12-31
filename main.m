@@ -1,7 +1,8 @@
+function [g, c, f_opt] = main()
 N = 2;
-constraints.rho0 = 0.25;
+constraints.rho0 = 0.3;
 constraints.tau0 = 0;
-[g, c] = initialize(N, constraints, true);
+[g, c] = initialize(N, constraints);
 f_opts = [Inf];
 tol = 1e-6;
 while true
@@ -11,4 +12,5 @@ while true
         break
     end
     f_opts = [f_opts, f_opt];
+end
 end
