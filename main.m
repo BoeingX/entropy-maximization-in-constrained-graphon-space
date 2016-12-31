@@ -1,7 +1,7 @@
 N = 2;
-constraints.rho0 = 1/4;
+constraints.rho0 = 0.25;
 constraints.tau0 = 0;
-[g, c] = initialize(N, constraints, false);
+[g, c] = initialize(N, constraints, true);
 f_opts = [Inf];
 tol = 1e-6;
 while true

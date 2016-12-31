@@ -5,8 +5,6 @@ function [g, c] = rescale(g, c, N, rho0, tau0)
 % c: a column vector of size N
 % N: dimension of problem
 
-c = c./sum(c); % normalize c is trivial
-
 % normalize g by g' = alpha*g + beta
 % which consists of solving a nonlinear system
 % of alpha and beta
