@@ -2,15 +2,19 @@ function [g_opt, c_opt, f_opt] = optimize(N, constraints, N_init)
 if nargin < 3
     N_init = 10;
 end
-f_opt = Inf
-for i = 1:N_init
+g_opt = zeros(N*N, N_init);
+c_opt = zeros(N, N_init);
+f_opt = zeros(1, N_init);
+parfor i = 1:N_init
     [g, c, f] = optimize_single(N, constraints, 1e-6);
-    if f(end) < f_opt(end)
-        g_opt = g;
-        c_opt = c;
-        f_opt = f;
-    end
+    g_opt(:, i) = g;
+    c_opt(:, i) = c;
+    f_opt(:, i) = f(end);
 end
+[M, I] = min(f_opt);
+g_opt = g_opt(:, I);
+c_opt = c_opt(:, I);
+f_opt = M;
 end
 
 function [g, c, f] = optimize_single(N, constraints, tol)
