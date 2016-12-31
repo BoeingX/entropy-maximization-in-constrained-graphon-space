@@ -4,7 +4,7 @@ fung = @(x)entropy(x, c, N);
 
 % characterize a symmetric matrix
 % by a linear system Aeq * g = 0 := beq
-[Aeq, beq] = linear_constraints_eq(N);
+[Aeq, beq] = linear_constraints_eq(N, 'g');
 lb = zeros(size(g));
 ub = ones(size(g));
 

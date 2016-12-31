@@ -1,7 +1,4 @@
-function [g, c, f_opt] = main()
-N = 2;
-constraints.rho0 = 0.3;
-constraints.tau0 = 0;
+function [g, c, f_opt] = optimize(N, constraints)
 [g, c] = initialize(N, constraints);
 f_opts = [Inf];
 tol = 1e-6;
