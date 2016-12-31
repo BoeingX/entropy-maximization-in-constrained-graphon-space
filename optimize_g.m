@@ -8,7 +8,7 @@ fung = @(x)entropy(x, c, N);
 lb = zeros(size(g));
 ub = ones(size(g));
 
-options = optimoptions('fmincon','Display', 'iter', 'MaxFunctionEvaluation', 1e5);
+options = optimoptions('fmincon','Display', 'off', 'MaxFunctionEvaluation', 1e5, 'ConstraintTolerance', 1e-20);
 nonlcong = @(x)nonlinear_constraints(x, c, N, constraints);
 [g_opt, f_opt] = fmincon(fung, g, [], [], Aeq, beq, lb, ub, nonlcong, options);
 end
