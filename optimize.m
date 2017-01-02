@@ -11,10 +11,9 @@ parfor i = 1:N_init
     c_opt(:, i) = c;
     f_opt(:, i) = f(end);
 end
-[M, I] = min(f_opt);
+[f_opt, I] = min(f_opt);
 g_opt = g_opt(:, I);
 c_opt = c_opt(:, I);
-f_opt = M;
 end
 
 function [g, c, f] = optimize_single(N, constraints, tol)
@@ -31,7 +30,7 @@ while true
     end
     fs = [fs, f];
     [cueq, ceq] = nonlinear_constraints(g, c, N, constraints);
-    if sum(ceq > 1e-10) ~= 0
+    if sum(abs(ceq) > 1e-10) ~= 0
         [g, c] = initialize(N, constraints);
         fs = [Inf];
     end

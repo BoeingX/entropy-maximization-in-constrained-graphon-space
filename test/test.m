@@ -4,12 +4,11 @@ rho0 = 0.3;
 tau0 = sqrt(rho0^3);
 constraints.rho0 = rho0;
 constraints.tau0 = tau0;
-[g, c, f] = optimize(N, constraints, 1);
+[g, c, f] = optimize(N, constraints, 10);
 g_true = reshape([1, 0, 0, 0], [], 1);
 c_true = [sqrt(rho0); sqrt(rho0)];
 f_true = entropy(g_true, c_true, N);
 abs(f - f_true)
-
 
 %% case 2
 rho0 = 0.3;
