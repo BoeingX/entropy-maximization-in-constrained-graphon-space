@@ -1,6 +1,6 @@
 function [c_opt, f_opt] = optimize_c(g, c, N, constraints)
 func = @(x)entropy(g, x, N);
-options = optimoptions('fmincon','Algorithm', 'sqp', 'Display', 'off', 'ConstraintTolerance', 1e-35);
+options = optimoptions('fmincon','Algorithm', 'sqp', 'Display', 'off', 'ConstraintTolerance', 1e-10);
 [Aeq, beq] = linear_constraints_eq(N, 'c');
 lb = zeros(size(c));
 ub = ones(size(c));
