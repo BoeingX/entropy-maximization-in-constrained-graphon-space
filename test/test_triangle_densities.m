@@ -5,8 +5,7 @@ tau0 = td(10, end);
 constraints.rho0 = rho0;
 constraints.tau0 = tau0;
 f_opts = [inf];
-for N = 3:6
-    N
-    [g, c, f] = optimize(N, constraints, min(f_opts), 10);
+for N = 3:5
+    [g, c, f] = optimize(N, constraints, min(f_opts));
     f_opts = [f_opts, f];
 end
