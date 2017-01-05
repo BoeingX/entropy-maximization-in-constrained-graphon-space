@@ -6,6 +6,7 @@ constraints.rho0 = rho0;
 constraints.tau0 = tau0;
 f_opts = [inf];
 for N = 3:5
-    [g, c, f] = optimize(N, constraints, min(f_opts));
+    N
+    [g, c, f] = optimize_direct(N, constraints, min(f_opts));
     f_opts = [f_opts, f];
 end

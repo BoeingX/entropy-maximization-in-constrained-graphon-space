@@ -27,9 +27,7 @@ tau0 = 0.1;
 constraints.rho0 = rho0;
 constraints.tau0 = tau0;
 [g, c, f] = optimize_direct(N, constraints, inf);
-g_true = reshape([0.5-(0.5^3-tau0), 0.5+(0.5^3-tau0); 0.5+(0.5^3-tau0), 0.5-(0.5^3-tau0)], [], 1);
-c_true = solve_c_known_g(g_true, N, constraints);
-f_true = entropy(g_true, c_true, N);
+f_true = -log(2)/2;
 abs(f - f_true)
 
 %% case 4

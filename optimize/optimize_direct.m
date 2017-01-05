@@ -1,10 +1,10 @@
 function [g_opt, c_opt, f_opt, flag_opt] = optimize_direct(N, constraints, f_opt_prior)
-N_init = 5;
+N_init = 4;
 g_opt = zeros(N*N, N_init);
 c_opt = zeros(N, N_init);
 f_opt = zeros(1, N_init);
 flag_opt = zeros(1, N_init);
-for i = 1:N_init
+parfor i = 1:N_init
     [g, c, f, flag] = optimize_direct_single(N, constraints, f_opt_prior);
     g_opt(:, i) = g;
     c_opt(:, i) = c;
@@ -24,7 +24,7 @@ end
 
 function [g, c, f, flag] = optimize_direct_single(N, constraints, f_opt_prior)
 flag = -1;
-max_retry = 100;
+max_retry = 10;
 num_retry = 0;
 [Aeq_g, beq_g] = linear_constraints_eq(N, 'g');
 [Aeq_c, beq_c] = linear_constraints_eq(N, 'c');
