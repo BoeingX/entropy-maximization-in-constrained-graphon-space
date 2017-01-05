@@ -43,7 +43,7 @@ while true
         nonlcon = @(x)nonlinear_constraints(x(1:N*N), x(N*N+1:end), N, constraints);
         [x, f, flag] = fmincon(func, x, [], [], Aeq, beq, lb, ub, nonlcon, options);
         g = x(1:N*N);
-        c = x(N*N+1, end);
+        c = x(N*N+1:end);
     end
     if flag >= 0 && f < f_opt_prior
         return

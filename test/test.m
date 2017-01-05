@@ -6,7 +6,7 @@ constraints.rho0 = rho0;
 constraints.tau0 = tau0;
 [g, c, f] = optimize(N, constraints, inf);
 g_true = reshape([1, 0, 0, 0], [], 1);
-c_true = [sqrt(rho0); sqrt(rho0)];
+c_true = [sqrt(rho0); 1-sqrt(rho0)];
 f_true = entropy(g_true, c_true, N);
 abs(f - f_true)
 
