@@ -5,16 +5,17 @@ function [t] = tau(g, c, N)
 % g: a column vector of size NxN
 % c: a column vector of size N
 % N: dimension of problem
-t = 0.0;
-for i = 1:N
-    for j = 1:N
-        for k = 1:N
-            t = t + g(sub2ind([N, N], i, j))*g(sub2ind([N, N], j, k))*g(sub2ind([N, N], k, i))*c(i)*c(j)*c(k);
-        end
-    end
-end
 
-% matrix way
-% g = reshape(g, [], N);
-% t = trace((g*diag(c))^3);
+% t = 0.0;
+% for i = 1:N
+%     for j = 1:N
+%         for k = 1:N
+%             t = t + g(sub2ind([N, N], i, j))*g(sub2ind([N, N], j, k))*g(sub2ind([N, N], k, i))*c(i)*c(j)*c(k);
+%         end
+%     end
+% end
+
+
+g = reshape(g, [], N);
+t = trace((g*diag(c))^3);
 end
