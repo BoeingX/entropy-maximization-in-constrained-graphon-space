@@ -4,9 +4,9 @@ if nargin < 3
     variable = 'all';
 end
 if strcmp(variable, 'g')
-    grad = Aeq(1:N*N);
+    grad = Aeq(N*(N-1)/2, 1:(N*N));
 elseif strcmp(variable, 'c')
-    grad = Aeq((N*N+1):end);
+    grad = Aeq((N*(N-1)/2+1):end, (N*N+1):end);
 else
     grad = Aeq;
 end

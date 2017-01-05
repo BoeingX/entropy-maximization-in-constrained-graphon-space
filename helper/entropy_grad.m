@@ -9,10 +9,10 @@ end
 if strcmp(variable, 'g')
     grad = reshape(c*c', [], 1).*Iprime(g);
 elseif strcmp(variable, 'c')
-    grad = 2*reshape(g, N, [])*c;
+    grad = 2*reshape(I(g), N, [])*c;
 else
     grad1 = reshape(c*c', [], 1).*Iprime(g);
-    grad2 = 2*reshape(g, N, [])*c;
+    grad2 = 2*reshape(I(g), N, [])*c;
     grad = [grad1; grad2];
 end
 end

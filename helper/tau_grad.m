@@ -13,8 +13,8 @@ elseif strcmp(variable, 'c')
     grad = 3*diag((g*diag(c))^3);
 else
     g = reshape(g, N, []);
-    grad1 = 3*(c*c').*(g.*(g'*diag(c)*g'));
-    grad2 = 3*diag((g*diag(c))^3);
+    grad1 = 3*(c*c').*(g'*diag(c)*g');
+    grad2 = 3*diag((g*diag(c))^2*g);
     grad = [grad1(:);grad2];
 end
 end
