@@ -23,7 +23,7 @@ abs(f - f_true)
 
 %% case 3
 rho0 = 0.5;
-tau0 = 0.1;
+tau0 = 0.125;
 constraints.rho0 = rho0;
 constraints.tau0 = tau0;
 [g, c, f] = optimize_direct(N, constraints, inf);
