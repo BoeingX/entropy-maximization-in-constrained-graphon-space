@@ -1,6 +1,6 @@
 function [grad] = linear_constraints_grad(Aeq, N, variable)
 % gradient of the linear constraints function
-if nargin < 4
+if nargin < 3
     variable = 'all';
 end
 if strcmp(variable, 'g')
