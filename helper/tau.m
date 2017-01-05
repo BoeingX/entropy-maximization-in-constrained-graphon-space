@@ -13,4 +13,8 @@ for i = 1:N
         end
     end
 end
+
+% matrix way
+% g = reshape(g, [], N);
+% t = trace((g*diag(c))^3);
 end
