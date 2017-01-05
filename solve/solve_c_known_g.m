@@ -7,6 +7,6 @@ lb = zeros(size(c));
 ub = ones(size(c));
 nonlconc = @(x)nonlinear_constraints(g, x, N, constraints);
 
-opts = optimoptions(@fmincon,'Algorithm','sqp','Display','off', 'ConstraintTolerance', 1e-10);
+opts = optimoptions(@fmincon,'Algorithm','sqp','Display','off', 'ConstraintTolerance', 1e-6);
 [c, ~, flag] = fmincon(@(x)0, c, [], [], Aeq, beq, lb, ub, nonlconc, opts);
 end

@@ -1,27 +1,3 @@
-function [g_opt, c_opt, f_opt, flag_opt] = optimize_direct(N, constraints, f_opt_prior)
-N_init = 4;
-g_opt = zeros(N*N, N_init);
-c_opt = zeros(N, N_init);
-f_opt = zeros(1, N_init);
-flag_opt = zeros(1, N_init);
-parfor i = 1:N_init
-    [g, c, f, flag] = optimize_direct_single(N, constraints, f_opt_prior);
-    g_opt(:, i) = g;
-    c_opt(:, i) = c;
-    f_opt(:, i) = f(end);
-    flag_opt(:, i) = flag; 
-end
-idx = find(flag_opt > 0);
-if ~isempty(idx)
-    [f_opt, idx] = min(f_opt);
-    g_opt = g_opt(:, idx);
-    c_opt = c_opt(:, idx);
-    flag_opt = flag_opt(:, idx);
-    return
-end
-flag_opt = NaN;
-end
-
 function [g, c, f, flag] = optimize_direct_single(N, constraints, f_opt_prior)
 flag = -1;
 max_retry = 10;
@@ -36,7 +12,6 @@ nvars = N*N + N;
 % x here is a ROW vector
 func = @(x)entropy(x(1:N*N)', x((N*N+1):end)', N);
 nonlcon = @(x)nonlinear_constraints(x(1:N*N)', x((N*N+1):end)', N, constraints);
-
 while num_retry < max_retry
     % create problem
     problem.fitnessfcn = func;
