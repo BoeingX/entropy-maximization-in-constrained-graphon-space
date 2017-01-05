@@ -14,10 +14,11 @@ if strcmp(algorithm, 'al')
     eta = 1e-8;
     eta_0 = 1e-1;
     eta_k = 1e-1;
+    w = 1e-10;
     converged = false;
     alpha = 0.5;
     beta = 0.5;
-    t = 100;
+    t = 10;
     % equality constraints
     [Aeq_g, beq_g] = linear_constraints_eq(N, 'g');
     [Aeq_c, beq_c] = linear_constraints_eq(N, 'c'); 
@@ -31,7 +32,7 @@ if strcmp(algorithm, 'al')
 %         grad = @(u) entropy_grad(u(1:N*N), u((N*N+1):end), N) ...
 %             - y' * con_grad(u, N, Aeq) + lambda_k*con(u, N, constraints, Aeq, beq)'*con_grad(u, N, Aeq);
         func_grad = @(u) compute_func_grad(u, y, lambda_k, N, constraints, Aeq, beq);
-        options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', 1e-10, 'GradObj','on');
+        options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', w, 'GradObj','on');
         [x_opt, L, flag, ~, ~, z_opt, ~] = fmincon(func_grad, x, [], [], [], [], lb, ub, [], options);
         if norm(con(x_opt, N ,constraints, Aeq, beq)) < max(eta, eta_k)
             y_opt = y - lambda_k*con(x, N, constraints, Aeq, beq);
