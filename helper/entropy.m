@@ -5,5 +5,7 @@ function [H] = entropy(g, c, N)
 % c: a column vector of size N
 % N: dimension of problem
 g = reshape(g, N, []); %convert g to a square matrix
+% make sure that c is a column vector
+c = reshape(c, N, []);
 H = c'*I(g)*c;
 end
