@@ -32,4 +32,3 @@ g_opt = g_opt(:, end);
 c_opt = c_opt(:, end);
 flag_opt = -1;
 end
-

@@ -9,16 +9,17 @@ rho0 = constraints.rho0;
 tau0 = constraints.tau0;
 if (tau0^2 - rho0^3) < 1e-6
     g_true = reshape([1; 0; 0; 0], N, []);
+    c_true = [sqrt(rho0); 1 - sqrt(rho0)];
     f_true = 0;
 elseif rho0 < 0.5 && tau0 == 0
     g_true = reshape([0, 2*rho0; 2*rho0, 0], N, []);
-    c_true = solve_c_known_g(g_true, N, constraints);
+    c_true = [0.5; 0.5];
     f_true = entropy(g_true, c_true, N);
 elseif rho0 == 0.5 && tau0 <= 0.125
     a = 0.5 - (0.5^3 - tau0)^(1/3);
     b = 0.5 + (0.5^3 - tau0)^(1/3);
     g_true = reshape([a, b; b, a], N, []);
-    c_true = solve_c_known_g(g_true, N, constraints);
+    c_true = [0.5; 0.5];
     f_true = entropy(g_true, c_true, N);
 end
 algorithms = cell(4, 1);
