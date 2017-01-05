@@ -1,5 +1,5 @@
 function [g_opt, c_opt, f_opt, flag_opt] = optimize_direct(N, constraints, f_opt_prior)
-N_init = 1;
+N_init = 5;
 g_opt = zeros(N*N, N_init);
 c_opt = zeros(N, N_init);
 f_opt = zeros(1, N_init);
