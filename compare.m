@@ -27,7 +27,7 @@ algorithms{1} = 'baseline';
 algorithms{2} = 'ga';
 algorithms{3} = 'al';
 for i = 1:3
-    algorithm = algorithms{i};
+    algorithm = algorithms{i}
     [g, c, f, flag] = optimize(N, constraints, inf, algorithm);
     g = reshape(g, N, []);
     if g(1,1) < g(2, 2)
