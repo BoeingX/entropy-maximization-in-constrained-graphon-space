@@ -52,6 +52,11 @@ while true
         return
     end
 end
+function stop = outfun(x,optimValues,state)
+    stop = false;
+    history.fval = [history.fval; optimValues.fval];
+    history.x = [history.x; x];
+end
 end
 
 function [obj, grad] = compute_func_grad(u, y, lambda, N, constraints, Aeq, beq)
@@ -85,9 +90,4 @@ function [g, c] = get_gc(x, N)
 x = reshape(x, [], 1);
 g = x(1:N*N);
 c = x((N*N+1):end);
-end
-function stop = outfun(x,optimValues,state)
-    stop = false;
-    history.fval = [history.fval; optimValues.fval];
-    history.x = [history.x; x];
 end
