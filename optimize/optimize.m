@@ -7,19 +7,19 @@ flag_opt = zeros(1, N_init);
 history_opt = cell(1, N_init);
 for i = 1:N_init
     if strcmp(algorithm, 'baseline')
-        [g, c, f, flag] = optimize_baseline(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_baseline(N, constraints, f_opt_prior);
     elseif strcmp(algorithm, 'alter')
-        [g, c, f, flag] = optimize_alter(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_alter(N, constraints, f_opt_prior);
     elseif strcmp(algorithm, 'ga')
-        [g, c, f, flag] = optimize_ga(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_ga(N, constraints, f_opt_prior);
     else
-        [g, c, f, flag] = optimize_al(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_al(N, constraints, f_opt_prior);
     end
     g_opt(:, i) = g;
     c_opt(:, i) = c;
     f_opt(:, i) = f(end);
     flag_opt(:, i) = flag; 
-    history_opt(i) = history;
+    history_opt{i} = history;
 end
 idx = find(flag_opt > 0);
 if ~isempty(idx)
