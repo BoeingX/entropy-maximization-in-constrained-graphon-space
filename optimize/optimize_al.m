@@ -6,7 +6,8 @@ ub = ones(nvars, 1);
 x = rand(nvars, 1);
 y = rand(n_constraints, 1);
 lambda = 1;
-eta = 1e-8;
+eta = 1e-10;
+w = 1e-10;
 eta_0 = 1e-1;
 eta_k = 1e-1;
 converged = false;
@@ -22,7 +23,7 @@ Aeq = [Aeq_g, zeros(n11, n22); zeros(n21, n12), Aeq_c];
 beq = [beq_g; beq_c];
 while true
     func_grad = @(u) compute_func_grad(u, y, lambda, N, constraints, Aeq, beq);
-    options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', 1e-10, 'GradObj','on');
+    options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', w, 'GradObj','on');
     [x_opt, L, flag, ~, ~, z_opt, ~] = fmincon(func_grad, x, [], [], [], [], lb, ub, [], options);
     if norm(con(x_opt, N ,constraints, Aeq, beq)) < max(eta, eta_k)
         y_opt = y - lambda*con(x, N, constraints, Aeq, beq);
@@ -30,7 +31,7 @@ while true
         y = y_opt;
         z = z_opt;
         if norm(abs(con(x, N, constraints, Aeq, beq))) < eta && (isempty(find(x < 0))) ...
-            & (isempty(find(x > 1)))
+            && (isempty(find(x > 1)))
             converged = true;
         end
         eta_k = eta_k / (1 + lambda^beta);
