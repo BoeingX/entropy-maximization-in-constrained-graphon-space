@@ -1,4 +1,4 @@
-function [g, c, f, flag] = optimize_al(N, constraints, f_opt_prior)
+function [g, c, f, flag, history] = optimize_al(N, constraints, f_opt_prior)
 n_constraints = N*(N-1)/2 + 3;
 nvars = N*N + N;
 lb = zeros(nvars, 1);
@@ -21,9 +21,11 @@ t = 10;
 [n21, n22] = size(Aeq_c);
 Aeq = [Aeq_g, zeros(n11, n22); zeros(n21, n12), Aeq_c];
 beq = [beq_g; beq_c];
+history.x = [];
+history.fval = [];
 while true
     func_grad = @(u) compute_func_grad(u, y, lambda, N, constraints, Aeq, beq);
-    options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', w, 'GradObj','on');
+    options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', w, 'GradObj','on', 'OutputFcn',@outfun);
     [x_opt, L, flag, ~, ~, z_opt, ~] = fmincon(func_grad, x, [], [], [], [], lb, ub, [], options);
     if norm(con(x_opt, N ,constraints, Aeq, beq)) < max(eta, eta_k)
         y_opt = y - lambda*con(x, N, constraints, Aeq, beq);
@@ -83,4 +85,9 @@ function [g, c] = get_gc(x, N)
 x = reshape(x, [], 1);
 g = x(1:N*N);
 c = x((N*N+1):end);
+end
+function stop = outfun(x,optimValues,state)
+    stop = false;
+    history.fval = [history.fval; optimValues.fval];
+    history.x = [history.x; x];
 end
