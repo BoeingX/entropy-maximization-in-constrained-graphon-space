@@ -5,11 +5,11 @@ lb = zeros(nvars, 1);
 ub = ones(nvars, 1);
 x = rand(nvars, 1);
 y = rand(n_constraints, 1);
-lambda = 1;
+lambda = 1e9;
 eta = 1e-8;
-w = 1e-8;
-eta_0 = 1e-1;
-eta_k = 1e-1;
+w = 1e-3;
+eta_0 = 1e-3;
+eta_k = eta_0;
 converged = false;
 alpha = 0.5;
 beta = 0.5;
@@ -25,6 +25,7 @@ history.x = [];
 history.fval = [];
 while true
     func_grad = @(u) compute_func_grad(u, y, lambda, N, constraints, Aeq, beq);
+    w = w*0.1;
     options = optimoptions('fmincon','Algorithm', 'interior-point', 'Display', 'off', 'TolFun', w, 'GradObj','on', 'OutputFcn',@outfun);
     [x_opt, L, flag, ~, ~, z_opt, ~] = fmincon(func_grad, x, [], [], [], [], lb, ub, [], options);
     if norm(con(x_opt, N ,constraints, Aeq, beq)) < max(eta, eta_k)
@@ -51,6 +52,11 @@ while true
         flag = -1;
         return
     end
+end
+function stop = outfun(x,optimValues,state)
+    stop = false;
+    history.fval = [history.fval; optimValues.fval];
+    history.x = [history.x; x];
 end
 end
 
@@ -85,9 +91,4 @@ function [g, c] = get_gc(x, N)
 x = reshape(x, [], 1);
 g = x(1:N*N);
 c = x((N*N+1):end);
-end
-function stop = outfun(x,optimValues,state)
-    stop = false;
-    history.fval = [history.fval; optimValues.fval];
-    history.x = [history.x; x];
 end

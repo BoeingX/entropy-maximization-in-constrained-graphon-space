@@ -9,18 +9,17 @@ for i = 1:N_init
     if strcmp(algorithm, 'baseline')
         [g, c, f, flag, history] = optimize_baseline(N, constraints, f_opt_prior);
     elseif strcmp(algorithm, 'alter')
-        [g, c, f, flag] = optimize_alter(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_alter(N, constraints, f_opt_prior);
     elseif strcmp(algorithm, 'ga')
-        [g, c, f, flag] = optimize_ga(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_ga(N, constraints, f_opt_prior);
     else
-        [g, c, f, flag] = optimize_al(N, constraints, f_opt_prior);
+        [g, c, f, flag, history] = optimize_al(N, constraints, f_opt_prior);
     end
     g_opt(:, i) = g;
     c_opt(:, i) = c;
     f_opt(:, i) = f(end);
     flag_opt(:, i) = flag; 
     history_opt{i} = history;
-    history.fval
 end
 idx = find(flag_opt > 0);
 if ~isempty(idx)
@@ -28,12 +27,12 @@ if ~isempty(idx)
     g_opt = g_opt(:, idx)
     c_opt = c_opt(:, idx);
     flag_opt = flag_opt(:, idx);
-    history_opt = history_opt(idx);
+    history_opt = history_opt{idx};
     return
 end
 f_opt = f_opt(:, end);
 g_opt = g_opt(:, end);
 c_opt = c_opt(:, end);
 flag_opt = -1;
-history_opt = history_opt(end);
+history_opt = history_opt{end};
 end

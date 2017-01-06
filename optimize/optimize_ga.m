@@ -36,9 +36,9 @@ while num_retry < max_retry
     end
     num_retry =  num_retry + 1;
 end
-end
 function stop = outfun(x,optimValues,state)
     stop = false;
     history.fval = [history.fval; optimValues.fval];
     history.x = [history.x; x];
+end
 end
