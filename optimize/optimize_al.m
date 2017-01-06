@@ -6,14 +6,14 @@ ub = ones(nvars, 1);
 x = rand(nvars, 1);
 y = rand(n_constraints, 1);
 lambda = 1;
-eta = 1e-10;
-w = 1e-10;
+eta = 1e-8;
+w = 1e-8;
 eta_0 = 1e-1;
 eta_k = 1e-1;
 converged = false;
 alpha = 0.5;
 beta = 0.5;
-t = 10;
+t = 100;
 % equality constraints
 [Aeq_g, beq_g] = linear_constraints_eq(N, 'g');
 [Aeq_c, beq_c] = linear_constraints_eq(N, 'c'); 

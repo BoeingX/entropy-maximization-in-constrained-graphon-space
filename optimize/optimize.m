@@ -1,5 +1,5 @@
 function [g_opt, c_opt, f_opt, flag] = optimize(N, constraints, f_opt_prior, algorithm)
-N_init = 4;
+N_init = 1;
 g_opt = zeros(N*N, N_init);
 c_opt = zeros(N, N_init);
 f_opt = zeros(1, N_init);
@@ -22,7 +22,7 @@ end
 idx = find(flag_opt > 0);
 if ~isempty(idx)
     [f_opt, idx] = min(f_opt);
-    g_opt = g_opt(:, idx);
+    g_opt = g_opt(:, idx)
     c_opt = c_opt(:, idx);
     flag_opt = flag_opt(:, idx);
     return
