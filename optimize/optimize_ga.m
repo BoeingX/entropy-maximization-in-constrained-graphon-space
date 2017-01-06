@@ -1,4 +1,4 @@
-function [g, c, f, flag] = optimize_direct_single(N, constraints, f_opt_prior)
+function [g, c, f, flag, history] = optimize_direct_single(N, constraints, f_opt_prior)
 flag = -1;
 max_retry = 10;
 num_retry = 0;
@@ -12,6 +12,8 @@ nvars = N*N + N;
 % x here is a ROW vector
 func = @(x)entropy(x(1:N*N)', x((N*N+1):end)', N);
 nonlcon = @(x)nonlinear_constraints(x(1:N*N)', x((N*N+1):end)', N, constraints);
+history.x = [];
+history.fval = [];
 while num_retry < max_retry
     % create problem
     problem.fitnessfcn = func;
@@ -24,7 +26,7 @@ while num_retry < max_retry
     problem.ub = ones(1, nvars);
     problem.nonlcon = nonlcon;
     problem.solver = 'ga';
-    options = gaoptimset('Display', 'off', 'NonlinConAlgorithm', 'penalty', 'tolcon', 1e-6);
+    options = gaoptimset('Display', 'off', 'NonlinConAlgorithm', 'penalty', 'tolcon', 1e-6, 'OutputFcn',@outfun);
     problem.options = options;
     [x, f, flag] = ga(problem);
     g = x(1:N*N)';
@@ -34,4 +36,9 @@ while num_retry < max_retry
     end
     num_retry =  num_retry + 1;
 end
+end
+function stop = outfun(x,optimValues,state)
+    stop = false;
+    history.fval = [history.fval; optimValues.fval];
+    history.x = [history.x; x];
 end

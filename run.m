@@ -21,8 +21,8 @@ for i = 1:n
     dfs = [dfs, df];
 end
 %% case 2
-rho0s = linspace(0, 0.5, n);
-tau0s = 0;
+rho0s = linspace(0.1, 0.5, n);
+tau0s = zeros(size(rho0s));
 dg11s = [];
 dg12s = [];
 dg21s = [];
@@ -42,8 +42,8 @@ for i = 1:n
 end
 
 %% case 3
-rho0s = 0.5;
-tau0s = linspace(0, 0.125, n);
+tau0s = linspace(0.1, 0.125, n);
+rho0s = 0.5*ones(size(tau0s));
 dg11s = [];
 dg12s = [];
 dg21s = [];
