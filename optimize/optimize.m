@@ -1,5 +1,7 @@
-function [g_opt, c_opt, f_opt, flag_opt, history_opt] = optimize(N, constraints, f_opt_prior, algorithm)
-N_init = 1;
+function [g_opt, c_opt, f_opt, flag_opt, history_opt] = optimize(N, constraints, f_opt_prior, algorithm, N_init)
+if nargin < 5
+    N_init = 1;
+end
 g_opt = zeros(N*N, N_init);
 c_opt = zeros(N, N_init);
 f_opt = zeros(1, N_init);
